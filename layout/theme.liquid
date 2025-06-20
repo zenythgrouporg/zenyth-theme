@@ -31,7 +31,8 @@
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
+    <!-- Commented by Zenyth -->
+    <!-- <script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script> -->
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
 
@@ -256,6 +257,13 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    
+    {{ 'zenyth-core.css' | asset_url | stylesheet_tag }}
+
+
+
+    
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -296,10 +304,12 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+    <a class="skip-to-content-link button" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
@@ -372,5 +382,113 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+
+
+    
+
+
+    <style>
+  /* :root {
+    --znt-carousel-height: 600px;
+    --znt-carousel-primary-color: #d3d9bd;
+    --znt-carousel-secondary-color: #fff;
+    --znt-carousel-background: #d3d9bd;
+    --znt-carousel-background_dots: var(--znt-carousel-background);
+    --znt-carousel-background_slide: #d3d9bd;
+    --znt-carousel-background_slides-wrapper: var(--znt-carousel-background);
+    --znt-carousel-button-size: 32px;
+    --znt-carousel-button-radious: 0px;
+    --znt-carousel-button-color: #42307d;
+    --znt-carousel-button-icon-size: 20px;
+    --znt-carousel-button-border: 1px solid var(--znt-carousel-primary-color);
+    --znt-carousel-button-color_pause: #617d2b;
+    --znt-carousel-button-border_pause: 1px solid var(--znt-carousel-primary-color);
+    --znt-carousel-button-icon-color_pause: #fff;
+    --znt-carousel-button-color_next-prev: #617d2b;
+    --znt-carousel-button-border_next-prev: 1px solid var(--znt-carousel-primary-color);
+    --znt-carousel-button-color_lightbox: #617d2b;
+    --znt-carousel-button-border_lightbox: 1px solid var(--znt-carousel-primary-color);
+    --znt-carousel-button-radious_thumb: 6px;
+    --znt-carousel-button-border_thumb: 1px solid var(--znt-carousel-primary-color);
+    --znt-carousel-button-border_scroll: 1px solid var(--znt-carousel-background);
+    --znt-carousel-button-color_scroll: #fff;
+    --znt-carousel-button-background-color_scroll: var(--znt-carousel-background);
+    --znt-carousel-timing: .5s;
+    --znt-carousel-box-shadow: 4px 4px 8px rgba(0,0,0,.5);
+    --znt-fallback-color: #fff;
+    --znt-carousel-dot-color: #617d2b;
+    --znt-carousel-dot-size: 12px;
+    --znt-carousel-dot-radious: 50px;
+    --znt-carousel-thumb-height: 116px;
+    --znt-carousel-thumb-width: 100px;
+    --znt-carousel-thumb-vertical-gap: 8px;
+    --znt-carousel-thumb-horizontal-gap: 8px;
+    --znt-carousel-scroll-control-size: 32px;
+} */
+
+</style>
+
+
+    <script src="{{ 'zenyth-core.js' | asset_url }}" defer="defer"></script>
+
+    <script>
+      // Script to add screen reader annotations to highlighted search terms
+      document.addEventListener('DOMContentLoaded', function() {
+        // Create a mutation observer to watch for changes in the DOM
+        const bodyObserver = new MutationObserver(function(mutations) {
+          // Check if the predictive search results container exists
+          const resultsContainer = document.getElementById('predictive-search-results');
+          if (resultsContainer) {
+            // Function to add screen reader annotations to highlighted terms
+            function addScreenReaderAnnotationsToMarks() {
+              const marks = document.querySelectorAll('#predictive-search-results mark');
+              if (marks.length > 0) {
+                marks.forEach(mark => {
+                  // Check if annotations are already added
+                  if (!mark.previousElementSibling || !mark.previousElementSibling.classList.contains('visually-hidden')) {
+                    const startSpan = document.createElement('span');
+                    startSpan.className = 'visually-hidden';
+                    startSpan.textContent = 'highlight start';
+              
+                    const endSpan = document.createElement('span');
+                    endSpan.className = 'visually-hidden';
+                    endSpan.textContent = 'highlight end';
+              
+                    mark.parentNode.insertBefore(startSpan, mark);
+                    mark.parentNode.insertBefore(endSpan, mark.nextSibling);
+                  }
+                });
+              }
+            }
+            
+            // First, check for existing mark elements
+            addScreenReaderAnnotationsToMarks();
+            
+            // Then set up an observer specifically for the results container
+            const resultsObserver = new MutationObserver(function() {
+              addScreenReaderAnnotationsToMarks();
+            });
+            
+            // Start observing the results container for any changes
+            resultsObserver.observe(resultsContainer, { 
+              childList: true, 
+              subtree: true 
+            });
+            
+            // Stop observing the body since we found what we need
+            bodyObserver.disconnect();
+          }
+        });
+        
+        // Start observing the body for changes
+        bodyObserver.observe(document.body, { 
+          childList: true, 
+          subtree: true 
+        });
+      });
+    </script>
+
+    
   </body>
 </html>

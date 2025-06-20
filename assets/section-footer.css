@@ -11,6 +11,10 @@
   display: block;
 }
 
+.footer__content-top:not(:first-child) {
+  padding-top: 30px;
+}
+
 @media screen and (max-width: 749px) {
   .footer .grid {
     display: block;
@@ -130,6 +134,11 @@
   align-items: flex-end;
   margin-top: 3rem;
   gap: 1rem;
+}
+
+/* Added by Zenyth */
+.footer-block--newsletter:not(:last-child) {
+  padding-bottom: 30px;
 }
 
 .footer-block--newsletter:only-child {
@@ -314,6 +323,20 @@
 
 .footer-block__details-content {
   margin-bottom: 4rem;
+}
+
+/* Added by Zenyth */
+.footer-block__details-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-block__details-content ul li {
+  list-style: none;
+  padding-bottom: 8px;
+}
+.footer-block__details-content ul li a:not(:hover) {
+  text-decoration: none;
 }
 
 @media screen and (min-width: 750px) {
@@ -505,4 +528,59 @@
       padding-left: 3rem;
     }
   }
+}
+
+
+/* Zenyth's overrides */
+.footer .field__input {
+  background-color: #fff !important;
+}
+
+
+/* Flex Footer option */
+  /* .znt-footer:not(.znt--footer-flex) .znt--footer-flex_right-bottom {
+    display: none;
+  }
+  .znt-footer.znt--footer-flex .znt--footer-flex_right-bottom {
+    display: block;
+  }
+  .znt-footer.znt--footer-flex .znt--footer-flex_left-top {
+    display: none;
+  } */
+
+@media(min-width: 1025px) {
+  .znt--footer-flex {
+    display: flex;
+  }
+
+  .znt--footer-flex .znt--footer-flex_right-bottom {
+    display: block;
+    max-width: 30%;
+  }
+
+  .znt--footer-flex .footer__content-top {
+    padding-top: 80px !important;
+  }
+}
+
+
+
+
+/* When logo before Newsletter */
+.list-social:nth-child(3) {
+  flex-shrink: 0;
+} 
+
+
+.footer-block--newsletter .footer-block.grid__item:first-child {
+  margin-bottom: auto;
+}
+
+
+.znt--text-subscribe {
+  width: auto !important;
+  padding: 4px 10px; 
+  color: #fff;
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
 }

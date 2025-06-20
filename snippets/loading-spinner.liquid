@@ -7,6 +7,9 @@
   {% render 'loading-spinner' %}
 {% endcomment %}
 
-<div class="{% if class %}{{ class }}{% else %}loading__spinner hidden{% endif %}">
-  {{ 'loading-spinner.svg' | inline_asset_content }}
-</div>
+
+  <div class="{% if class %}{{ class }}{% else %}loading__spinner hidden{% endif %}" aria-live="assertive">
+    {{ 'loading-spinner.svg' | inline_asset_content }}
+    <span class="sr-only">Loading</span>
+  </div>
+

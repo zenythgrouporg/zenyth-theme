@@ -3,6 +3,10 @@
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   padding-top: 1rem;
+
+  /* Added by Zenyth */
+  z-index: 100;
+  position: relative;
 }
 
 .active-facets-mobile {
@@ -828,6 +832,7 @@ a.active-facets__button.focused .active-facets__button-inner {
 
 .mobile-facets__open-wrapper {
   display: inline-block;
+  cursor: pointer;
 }
 
 .mobile-facets__open {
@@ -1254,4 +1259,71 @@ input.mobile-facets__checkbox {
   .facets-vertical .active-facets__button-remove {
     padding: 0 1rem 1rem;
   }
+}
+
+
+/* Zenyth Overrides */
+.znt-facet-disclosure_button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.znt-facet-disclosure_button .icon {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.znt-facet-disclosure_button[aria-expanded="false"] + .znt-facet-disclosure_panel {
+  display: none !important;
+}
+
+
+/* Drawer overrides */
+.mobile-facets__arrow {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 14px;
+  right: 24px;
+}
+
+
+.mobile-facets__open-wrapper[aria-expanded="false"] + facet-filters-form {
+  display: none !important;
+}
+.mobile-facets__open-wrapper[aria-expanded="true"] + facet-filters-form .mobile-facets__inner {
+  transform: translate(0) !important;
+}
+
+
+
+/* Drawer submenus overrides */
+.mobile-facets__details {
+  border-bottom: 1px solid #666;
+}
+
+.znt-mobile-facets__button {
+  position: relative;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 1.3rem 2.5rem;
+  text-align: left;
+}
+
+.znt-mobile-facets__button .icon {
+  transform: rotate(90deg);
+}
+
+.znt-mobile-facets__button[aria-expanded="true"] .icon {
+  transform: rotate(-90deg);
+}
+
+.znt-mobile-facets__button[aria-expanded="false"] + .znt-mobile-facets__submenu {
+  display: none !important;
 }

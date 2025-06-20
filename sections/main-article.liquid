@@ -83,14 +83,16 @@
   {%- endfor -%}
 
   <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
-      <span class="icon-wrap">
-        <span class="svg-wrapper">
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
+    {%- if section.settings.show_back_to_blog -%}
+      <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
+        <span class="icon-wrap">
+          <span class="svg-wrapper">
+            {{- 'icon-arrow.svg' | inline_asset_content -}}
+          </span>
         </span>
-      </span>
-      {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
-    </a>
+        {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
+      </a>
+    {%- endif -%}
   </div>
   {%- if blog.comments_enabled? -%}
     <div class="article-template__comment-wrapper background-secondary">
@@ -297,6 +299,14 @@
   "name": "t:sections.main-article.name",
   "tag": "section",
   "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_back_to_blog",
+      "label": "Show back to blog link",
+      "default": true
+    }
+  ],
   "blocks": [
     {
       "type": "@app"

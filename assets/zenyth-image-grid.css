@@ -1,0 +1,572 @@
+.zenyth-image-grid {
+  padding: 4rem 0;
+}
+
+.zenyth-image-grid__heading {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Grid Base Styles */
+.znt-image-grid {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Grid Column Styles */
+.znt-image-grid__column {
+  position: relative;
+  width: 100%;
+}
+
+.znt-image-grid__column:focus-within {
+  outline: auto;
+  outline-offset: 4px;
+}
+
+.znt-image-grid__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.5s ease;
+}
+.znt-image-grid__image-wrapper:hover {
+  box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.75);
+}
+
+.znt-image-grid__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.znt-image-grid__placeholder {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+.znt-image-grid__placeholder svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Grid Column Classes */
+.znt-image-grid--1-columns {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.znt-image-grid--2-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.znt-image-grid--3-columns {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.znt-image-grid--4-columns {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.znt-image-grid--5-columns {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.znt-image-grid--6-columns {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.znt-image-grid--7-columns {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.znt-image-grid--8-columns {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 749px) {
+  .zenyth-image-grid {
+    padding: 2rem 0;
+  }
+
+  .znt-image-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .znt-image-grid {
+    grid-template-columns: 1fr;
+  }
+} 
+
+/* Dialog styles */
+.znt-image-grid__image-wrapper .znt-dialog_trigger {
+  height: 100%;
+  width: 100%;
+  box-shadow: none !important;
+}
+
+.znt-image-grid__image-wrapper .znt-dialog_trigger::before,
+.znt-image-grid__image-wrapper .znt-dialog_trigger::after {
+  box-shadow: none !important;
+}
+
+/* Slider Component Overrides */
+
+.znt-dialog-carousel-container {
+  position: relative;
+}
+
+.znt-dialog-carousel-container .slider-buttons {
+  position: initial !important;
+}
+.zenyth-image-grid .slider-button {
+  color: var(--znt-slider-button-svg-color, #ffffff);
+  background-color: var(--znt-slider-button-background-color, #53389e);
+  border: none;
+  border-radius: 50%;
+}
+
+
+
+.zenyth-image-grid .slider-button:hover {
+  opacity: 0.8;
+}
+
+.zenyth-image-grid .slider.slider--desktop {
+  margin-bottom: 3rem;
+}
+
+.zenyth-image-grid .grid__item .znt-image-grid__image-wrapper {
+  height: 320px;
+  margin: 0 auto;
+}
+
+/* Ensure proper spacing between slider items */
+.zenyth-image-grid .slider__slide {
+  padding: 0 10px;
+}
+
+/* Carousel overrides */
+.zenyth-image-grid .slider--desktop .slider__slide:first-child {
+  margin-left: 0 !important;
+}
+
+.zenyth-image-grid .slider {
+  padding: 16px;
+}
+
+/* Fix for exact column count display */
+.zenyth-image-grid .slider {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.zenyth-image-grid .grid--1-col-desktop .grid__item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--2-col-desktop .grid__item {
+  flex: 0 0 50%;
+  max-width: 50%;
+  width: 50%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--3-col-desktop .grid__item {
+  flex: 0 0 33.333%;
+  max-width: 33.333%;
+  width: 33.333%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--4-col-desktop .grid__item {
+  flex: 0 0 25%;
+  max-width: 25%;
+  width: 25%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--5-col-desktop .grid__item {
+  flex: 0 0 20%;
+  max-width: 20%;
+  width: 20%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--6-col-desktop .grid__item {
+  flex: 0 0 16.666%;
+  max-width: 16.666%;
+  width: 16.666%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--7-col-desktop .grid__item {
+  flex: 0 0 14.285%;
+  max-width: 14.285%;
+  width: 14.285%;
+  scroll-snap-align: start;
+}
+
+.zenyth-image-grid .grid--8-col-desktop .grid__item {
+  flex: 0 0 12.5%;
+  max-width: 12.5%;
+  width: 12.5%;
+  scroll-snap-align: start;
+}
+
+/* Fix for design mode */
+.shopify-editor .zenyth-image-grid .slider {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+
+/* Carousel overrides */
+.zenyth-image-grid .slider--desktop .slider__slide:first-child {
+  margin-left: 0 !important;
+}
+
+.zenyth-image-grid .slider {
+  padding: 16px;
+}
+
+.zenyth-image-grid .slider-buttons {
+  padding: 0;
+  justify-content: flex-end;
+  left: 0;
+  top: -16px;
+    right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Dialog styles */
+.znt-dialog_backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.znt-dialog_backdrop.znt--open {
+  display: block;
+  opacity: 1;
+}
+
+.znt-dialog_container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  background-color: #fff;
+  z-index: 1001;
+  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  overflow: auto;
+}
+
+.znt-dialog_container.znt--open {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.znt-dialog_close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 10px;
+  background-color: #617d2b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 1002;
+  width: 44px;
+    height: 44px;
+}
+
+.znt-dialog_close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.znt-dialog__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Dialog title */
+[id^="dialog-title-"] {
+  margin-top: 0;
+  padding-right: 30px; /* Make room for close button */
+}
+
+/* Reviews main image */
+.znt-reviews-main-image {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.znt-main-review-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Remove custom dialog trigger styles to inherit from theme */
+/* Dialog trigger button now inherits theme button styles */
+
+/* Review items styles */
+.znt-reviews-container {
+  margin-top: 20px;
+}
+
+/* Basic layout for non-carousel mode */
+.znt-review-item {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Carousel-specific styles */
+.znt-reviews-carousel {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 50px; /* Space for navigation/pagination */
+}
+
+.znt-reviews-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.znt-carousel-slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+/* When items per view is 2 */
+.znt-reviews-carousel[data-items-per-view="2"] .znt-carousel-slide {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+/* When items per view is 3 */
+.znt-reviews-carousel[data-items-per-view="3"] .znt-carousel-slide {
+  flex: 0 0 33.333%;
+  max-width: 33.333%;
+}
+
+/* Navigation buttons */
+.znt-carousel-navigation {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.znt-carousel-prev,
+.znt-carousel-next {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  font-size: 24px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination dots */
+.znt-carousel-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.znt-carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.znt-carousel-dot-active {
+  background-color: #333;
+}
+
+/* Review item content */
+.znt-review-image {
+  text-align: center;
+}
+
+.znt-review-image img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.znt-review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.znt-review-text {
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.znt-reviewer-info {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Medium and larger screens */
+@media screen and (min-width: 768px) {
+  .znt-review-item {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .znt-review-image {
+    flex: 0 0 120px;
+  }
+  
+  .znt-review-content {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  /* Adjust for smaller slides in carousel mode */
+  .znt-reviews-carousel .znt-review-item {
+    flex-direction: column;
+  }
+  
+  .znt-reviews-carousel[data-items-per-view="1"] .znt-review-item {
+    flex-direction: row;
+  }
+}
+
+/* Mobile adjustments for carousel */
+@media screen and (max-width: 767px) {
+  .znt-reviews-carousel[data-items-per-view="2"] .znt-carousel-slide,
+  .znt-reviews-carousel[data-items-per-view="3"] .znt-carousel-slide {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .znt-dialog_container {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}
+
+/* Prevent scrolling when dialog is open */
+body.znt-dialog-open {
+  overflow: hidden;
+} 
+
+
+.znt-dialog-slide {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  margin-left: -20px !important;
+}
+
+.znt-dialog-slide img {
+object-position:  center !important;
+}
+
+.znt-dialog-carousel-container,
+.znt-dialog-carousel-container slider-component {
+  height: 100% !important;
+}
+
+.znt-dialog-carousel-container .slider {
+  margin: 0 !important;
+}
+
+
+.znt-dialog-carousel-container .slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  right: 0;
+}
+
+.znt-dialog-carousel-container .slider-button--prev {
+  left: 0;
+}

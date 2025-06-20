@@ -1,0 +1,513 @@
+{% comment %}
+  Zenyth Shop Dots Component
+  Version: 1.0.0
+  Description: Interactive product dots overlay for product images
+{% endcomment %}
+
+{{ 'zenyth-shop-dots.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --znt-shopdots-section-background-color: {{ section.settings.background_color }};
+    --znt-shopdots-min-height: {{ section.settings.min_height }}px;
+    --znt-shopdots-token-background-color: {{ section.settings.token_background_color }};
+    --znt-shopdots-token-border-color: {{ section.settings.token_border_color }};
+    --znt-shopdots-token-box-shadow-color: {% if section.settings.enable_dot_shadow %}{{ section.settings.token_shadow_color }}{% else %}none{% endif %};
+    --znt-shopdots-token-box-shadow-color-hover: {% if section.settings.enable_dot_shadow %}{{ section.settings.token_shadow_color_hover }}{% else %}none{% endif %};
+    --znt-shopdots-token-outline-color: {{ section.settings.token_outline_color }};
+    --znt-shopdots-beacon-color-primary: {{ section.settings.beacon_primary_color }};
+    --znt-shopdots-beacon-color-secondary: {{ section.settings.beacon_secondary_color }};
+    --znt-shopdots-token-size: {{ section.settings.token_size }}px;
+    --znt-shopdots-max-width: {{ section.settings.max_width }}px;
+    --znt-shopdots-card-background-color: {{ section.settings.card_background_color }};
+    --znt-shopdots-card-box-shadow-color: {% if section.settings.enable_card_shadow %}{{ section.settings.card_shadow_color }}{% else %}none{% endif %};
+    --znt-shopdots-card-outline-color: {{ section.settings.card_outline_color }};
+    --znt-shopdots-card-heading-size: {{ section.settings.card_heading_size }}rem;
+    --znt-shopdots-card-heading-weight: {{ section.settings.card_heading_weight }};
+    --znt-shopdots-card-info-size: {{ section.settings.card_info_size }}rem;
+    --znt-shopdots-card-info-weight: {{ section.settings.card_info_weight }};
+    --znt-shopdots-card-text-color: {{ section.settings.card_text_color }};
+  }
+</style>
+
+<section class="znt-shopdots-section{% if section.settings.blur_background %} znt-blur-background{% endif %}" 
+  data-section-id="{{ section.id }}"
+  data-section-type="zenyth-shop-dots">
+  
+  {%- if section.settings.main_image != blank -%}
+    <img class="znt-shopdots_image-background" 
+      src="{{ section.settings.main_image | img_url: 'master' }}" 
+      alt="{{ section.settings.main_image.alt | escape }}"
+      loading="lazy"
+      width="{{ section.settings.main_image.width }}"
+      height="{{ section.settings.main_image.height }}"
+    />
+  {%- else -%}
+    <div class="znt-shopdots_image-background media placeholder">
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endif -%}
+
+  <div class="znt-shopdots{% if section.settings.enable_animation %} znt-shopdots-animation{% endif %}">
+    {%- if section.settings.main_image != blank -%}
+      <img class="znt-shopdots_image" 
+        src="{{ section.settings.main_image | img_url: 'master' }}" 
+        alt="{{ section.settings.main_image.alt | escape }}"
+        loading="lazy"
+        width="{{ section.settings.main_image.width }}"
+        height="{{ section.settings.main_image.height }}"
+      />
+    {%- else -%}
+      <div class="znt-shopdots-media-placeholder media placeholder">
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product_dot' -%}
+
+        <style>
+          @media (max-width: 768px) {
+            #znt-shopdots_card-{{ block.id }} {
+              right: initial !important;
+              left: calc(-{{ block.settings.position_x }}vw) !important;
+            }
+          }
+        </style>
+        
+        <div class="znt-shopdots_dot{% if block.settings.blur_background %} znt-blur-background{% endif %}{% if block.settings.product != blank and section.settings.show_price %}{% assign price_for_threshold = block.settings.product.price | divided_by: 100.00 %}{% if price_for_threshold >= settings.price_threshold %} znt-price-above-threshold{% endif %}{% endif %}" 
+          style="top: {{ block.settings.position_y }}%; left: {{ block.settings.position_x }}%;"
+          {{ block.shopify_attributes }}>
+          
+          <button class="znt-shopdots_token" 
+            aria-expanded="false" 
+            aria-controls="znt-shopdots_card-{{ block.id }}" 
+            aria-label="{{ block.settings.product.title | default: 'Product details' | escape }}">
+            <span class="znt-shopdots_token_1"></span>
+            <span class="znt-shopdots_token_2"></span>
+          </button>
+
+          <div class="znt-shopdots_card" id="znt-shopdots_card-{{ block.id }}">
+            {%- if block.settings.product.featured_image != blank -%}
+              <img class="znt-shopdots_card-image" 
+                src="{{ block.settings.product.featured_image | img_url: '300x' }}" 
+                alt=""
+                loading="lazy"
+                width="300"
+                height="{{ 300 | divided_by: block.settings.product.featured_image.aspect_ratio | round }}"
+              />
+            {%- else -%}
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'znt-shopdots_card-image placeholder-svg' }}
+            {%- endif -%}
+
+            <div class="znt-shopdots_card-content">
+
+              {%- if block.settings.product != blank -%}
+                <a class="znt-shopdots_card-link znt-shopdots_card-heading" href="{{ block.settings.product.url }}">
+                  {{ block.settings.product.title }}
+                </a>
+              {%- else -%}
+                <span class="znt-shopdots_card-link">Select a product</span>
+              {%- endif -%}
+    
+              {%- if section.settings.show_price -%}
+                <p class="znt-shopdots_card-info">
+                  {%- if block.settings.product != blank -%}
+                    {%- assign price_for_threshold = block.settings.product.price | divided_by: 100.00 -%}
+                    {%- if price_for_threshold >= settings.price_threshold -%}
+                      {%- if settings.contact_button_label != blank -%}
+                        <a href="{{ settings.contact_button_url | default: '/pages/contact' }}" class="znt-contact-link">
+                          {{ settings.contact_button_label }}
+                        </a>
+                      {%- else -%}
+                        <span>Please contact us for pricing</span>
+                      {%- endif -%}
+                    {%- else -%}
+                      {{ block.settings.product.price | money }}
+                    {%- endif -%}
+                  {%- else -%}
+                    $0.00
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- elsif block.type == 'collection_dot' -%}
+        <div class="znt-shopdots_dot{% if block.settings.blur_background %} znt-blur-background{% endif %}" 
+          style="top: {{ block.settings.position_y }}%; left: {{ block.settings.position_x }}%;"
+          {{ block.shopify_attributes }}>
+          
+          <button class="znt-shopdots_token" 
+            aria-expanded="false" 
+            aria-controls="znt-shopdots_card-{{ block.id }}" 
+            aria-label="{{ block.settings.collection.title | default: 'Collection details' | escape }}">
+          </button>
+
+          <style>
+            @media (max-width: 768px) {
+              #znt-shopdots_card-{{ block.id }} {
+                right: initial !important;
+                left: calc(-{{ block.settings.position_x }}vw) !important;
+              }
+            }
+          </style>
+
+          <div class="znt-shopdots_card" id="znt-shopdots_card-{{ block.id }}">
+            {%- if block.settings.collection.image != blank -%}
+              <img class="znt-shopdots_card-image" 
+                src="{{ block.settings.collection.image | img_url: '300x' }}" 
+                alt=""
+                loading="lazy"
+                width="300"
+                height="{{ 300 | divided_by: block.settings.collection.image.aspect_ratio | round }}"
+              />
+            {%- else -%}
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'znt-shopdots_card-image placeholder-svg' }}
+            {%- endif -%}
+
+            <div class="znt-shopdots_card-content">
+              {%- if block.settings.collection != blank -%}
+                <a class="znt-shopdots_card-heading znt-shopdots_card-link" href="{{ block.settings.collection.url }}">
+                  {{ block.settings.collection.title }}
+                </a>
+              {%- else -%}
+                <span class="znt-shopdots_card-link">Select a collection</span>
+              {%- endif -%}
+              {%- if section.settings.show_price -%}
+                <p class="znt-shopdots_card-info">
+                  {%- if block.settings.collection != blank -%}
+                    {{ block.settings.collection.products_count }} products
+                  {%- else -%}
+                    0 products
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+<script src="{{ 'zenyth-shop-dots.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Zenyth Shop Dots",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "blur_background",
+      "label": "Blur Background",
+      "default": false,
+      "info": "Adds a blur effect to the background image"
+    },
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 200,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Minimum Height",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Maximum Width",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Dot/Token Styles"
+    },
+    {
+      "type": "range",
+      "id": "token_size",
+      "min": 24,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Dot Size",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "token_background_color",
+      "label": "Dot Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "token_border_color",
+      "label": "Dot Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dot_shadow",
+      "label": "Enable Dot Shadow",
+      "default": true,
+      "info": "Adds a shadow effect to the dots"
+    },
+    {
+      "type": "color",
+      "id": "token_shadow_color",
+      "label": "Dot Shadow Color",
+      "default": "rgba(0, 0, 0, 0.5)"
+    },
+    {
+      "type": "color",
+      "id": "token_shadow_color_hover",
+      "label": "Dot Shadow Color (Hover)",
+      "default": "rgba(0, 0, 0, 0.75)"
+    },
+    {
+      "type": "color",
+      "id": "token_outline_color",
+      "label": "Dot Outline Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Beacon Effect"
+    },
+    {
+      "type": "paragraph",
+      "content": "The beacon effect creates a pulsing ring around the dots to draw attention. You can customize its colors below."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Enable Dot Animation",
+      "default": true,
+      "info": "Adds a pulsing animation effect to the dots"
+    },
+    {
+      "type": "color",
+      "id": "beacon_primary_color",
+      "label": "Beacon Primary Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "beacon_secondary_color",
+      "label": "Beacon Secondary Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card Styles"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_shadow",
+      "label": "Enable Card Shadow",
+      "default": true,
+      "info": "Adds a shadow effect to the cards"
+    },
+    {
+      "type": "color",
+      "id": "card_shadow_color",
+      "label": "Card Shadow Color",
+      "default": "rgba(0, 0, 0, 0.5)"
+    },
+    {
+      "type": "color",
+      "id": "card_outline_color",
+      "label": "Card Outline Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Card Typography"
+    },
+    {
+      "type": "range",
+      "id": "card_heading_size",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Card Heading Size",
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "card_heading_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "unit": "wgt",
+      "label": "Card Heading Weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "card_info_size",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Card Info Size",
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "card_info_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "unit": "wgt",
+      "label": "Card Info Weight",
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price",
+      "default": true,
+      "info": "Display product prices and collection product counts"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_dot",
+      "name": "Product Dot",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "⚠️ Important: Make sure the order of the blocks follows a natural reading flow—left to right, then top to bottom. The block order should match the visual placement of the dots to support accessibility."
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 Tip: New blocks are added with default positions (50%, 50%). You'll need to adjust the horizontal and vertical position values to avoid dots overlapping each other."
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "position_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "position_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position",
+          "default": 50
+        }
+      ]
+    },
+    {
+      "type": "collection_dot",
+      "name": "Collection Dot",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "⚠️ Important: Make sure the order of the blocks follows a natural reading flow—left to right, then top to bottom. The block order should match the visual placement of the dots to support accessibility."
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 Tip: New blocks are added with default positions (50%, 50%). You'll need to adjust the horizontal and vertical position values to avoid dots overlapping each other."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "position_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "position_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Zenyth Shop Dots",
+      "blocks": [
+        {
+          "type": "product_dot",
+          "settings": {
+            "position_x": 30,
+            "position_y": 40
+          }
+        },
+        {
+          "type": "collection_dot",
+          "settings": {
+            "position_x": 70,
+            "position_y": 60
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

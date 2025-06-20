@@ -59,3 +59,38 @@
 .collection-list-view-all {
   margin-top: 2rem;
 }
+
+
+
+
+
+/* Zenyth Overrides */
+
+.znt--rounded img,
+.znt--rounded .card__media,
+.znt--rounded .media,
+.znt--rounded .card__inner {
+  border-radius: 100% !important;
+}
+
+.znt--rounded .icon-wrap {
+  display: none;
+}
+
+.znt--rounded .card__heading a {
+  text-align: center;
+}
+
+
+/* Carousel mode overrides */
+
+.section-collection-list .slider--desktop .slider__slide:first-child {
+  margin-left: 0;
+}
+
+
+
+/* Scrollfix with collections list */
+.collection-list-wrapper {
+  width: 100%;
+}

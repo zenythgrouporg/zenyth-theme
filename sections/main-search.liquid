@@ -92,7 +92,7 @@
                   aria-expanded="false"
                   aria-owns="predictive-search-results"
                   aria-controls="predictive-search-results"
-                  aria-haspopup="listbox"
+                  aria-haspopup="dialog"
                   aria-autocomplete="list"
                   autocorrect="off"
                   autocomplete="off"
@@ -233,7 +233,6 @@
               id="product-grid"
               data-id="{{ section.id }}"
             >
-              <div class="loading-overlay gradient"></div>
               <div class="title-wrapper center">
                 <h2 class="title title--primary">
                   {{ 'sections.collection_template.empty' | t -}}
@@ -251,7 +250,6 @@
               id="product-grid"
               data-id="{{ section.id }}"
             >
-              <div class="loading-overlay gradient"></div>
               <ul
                 class="grid product-grid  grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
                 role="list"
@@ -264,9 +262,11 @@
                   {%- endif -%}
 
                   <li
-                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    id="Slide-{{ section.id }}-{{ forloop.index }}"
+                    class="grid__item{% if show_mobile_slider or show_desktop_slider %} slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if section.settings.show_price == 'hover' %} znt--show-on-hover{% endif %}"
                     {% if settings.animations_reveal_on_scroll %}
                       data-cascade
+                      style="--animation-order: {{ forloop.index }};"
                     {% endif %}
                   >
                     {%- case item.object_type -%}
@@ -279,6 +279,7 @@
                           show_secondary_image: section.settings.show_secondary_image,
                           show_vendor: section.settings.show_vendor,
                           show_rating: section.settings.show_rating,
+                          show_price: section.settings.show_price != 'hide',
                           lazy_load: lazy_load,
                           skip_styles: skip_card_product_styles
                         %}
@@ -367,6 +368,26 @@
     {
       "type": "header",
       "content": "t:sections.main-search.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "show_price",
+      "label": "Price Display",
+      "options": [
+        {
+          "value": "show",
+          "label": "Show Price"
+        },
+        {
+          "value": "hide",
+          "label": "Hide Price"
+        },
+        {
+          "value": "hover",
+          "label": "Show on Hover"
+        }
+      ],
+      "default": "show"
     },
     {
       "type": "select",

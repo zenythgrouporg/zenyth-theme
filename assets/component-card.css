@@ -135,7 +135,7 @@
 }
 
 .card__information {
-  grid-row-start: 2;
+  grid-row-start: 1; /* Changed from 2 to 1 By Zenyth*/
   padding: 1.3rem 1rem;
 }
 
@@ -387,21 +387,26 @@
   }
 
   .card:hover .media.media--hover-effect > img:first-child:only-child,
-  .card-wrapper:hover .media.media--hover-effect > img:first-child:only-child {
+  .card-wrapper:hover .media.media--hover-effect > img:first-child:only-child,
+  .card:focus-within .media.media--hover-effect > img:first-child:only-child,
+  .card-wrapper:focus-within .media.media--hover-effect > img:first-child:only-child {
     transform: scale(1.03);
   }
 
-  .card-wrapper:hover .media.media--hover-effect > img:first-child:not(:only-child) {
+  .card-wrapper:hover .media.media--hover-effect > img:first-child:not(:only-child),
+  .card-wrapper:focus-within .media.media--hover-effect > img:first-child:not(:only-child) {
     opacity: 0;
   }
 
-  .card-wrapper:hover .media.media--hover-effect > img + img {
+  .card-wrapper:hover .media.media--hover-effect > img + img,
+  .card-wrapper:focus-within .media.media--hover-effect > img + img {
     opacity: 1;
     transition: transform var(--duration-long) ease;
     transform: scale(1.03);
   }
 
-  .underline-links-hover:hover a {
+  .underline-links-hover:hover a,
+  .underline-links-hover:focus-within a {
     text-decoration: underline;
     text-underline-offset: 0.3rem;
   }
@@ -592,4 +597,173 @@
   .grid__item:nth-child(8n) .product-card-wrapper:hover .shape--blob {
     clip-path: polygon(var(--shape--blob-5));
   }
+}
+
+/* Color Swatches - Custom by Zenyth */
+
+/* ===== COLOR SWATCHES VARIABLES ===== */
+
+:root {
+  /* Colors */
+  --znt-swatch-label-bg: #fff;
+  --znt-swatch-label-text: #000;
+  --znt-swatch-shadow-color: rgba(0, 0, 0, 0.5);
+  --znt-swatch-card-bg: #fff;
+  --znt-swatch-card-shadow: rgba(0, 0, 0, 0.4);
+  --znt-swatch-card-shadow-hover: rgba(0, 0, 0, 0.75);
+
+  /* Sizes */
+  --znt-swatch-button-size: 32px;
+  --znt-swatch-label-font-size: 12px;
+  --znt-swatch-label-padding: 5px;
+  --znt-swatch-button-margin: 5px;
+  --znt-swatch-card-padding: 12px;
+
+  /* Spacing */
+  --znt-swatch-card-margin: -20px 0 10px 0;
+  --znt-swatch-card-padding-top: 16px;
+  --znt-swatch-card-padding-bottom: 16px;
+
+  /* Effects */
+  --znt-swatch-label-border-radius: 5px;
+  --znt-swatch-card-border-radius: 0;
+  --znt-swatch-shadow-horizontal: 4px;
+  --znt-swatch-shadow-vertical: 4px;
+  --znt-swatch-shadow-blur: 8px;
+  --znt-swatch-card-shadow-horizontal: 4px;
+  --znt-swatch-card-shadow-vertical: 4px;
+  --znt-swatch-card-shadow-blur: 10px;
+  --znt-swatch-card-shadow-blur-hover: 16px;
+  --znt-swatch-transition-duration: 0.5s;
+  --znt-swatch-button-shadow-horizontal: 3px;
+  --znt-swatch-button-shadow-vertical: 3px;
+  --znt-swatch-button-shadow-blur: 6px;
+  --znt-swatch-button-shadow-color: rgba(0, 0, 0, 0.5);
+  --znt-swatch-button-shadow-hover-horizontal: 4px;
+  --znt-swatch-button-shadow-hover-vertical: 4px;
+  --znt-swatch-button-shadow-hover-blur: 10px;
+  --znt-swatch-button-shadow-hover-color: rgba(0, 0, 0, 0.75);
+  --znt-swatch-button-shadow-active-horizontal: 0px;
+  --znt-swatch-button-shadow-active-vertical: 0px;
+  --znt-swatch-button-shadow-active-blur: 0px;
+  --znt-swatch-button-shadow-active-color: rgba(0, 0, 0, 0);
+
+
+  --znt-swatch-border-color: #000;
+  --znt-swatch-button-border-radius: 100px;
+
+  /* Z-index */
+  --znt-swatch-z-index: 9;
+  --znt-swatch-variant-images-z-index: 10;
+}
+
+.card__color-swatches {
+  z-index: var(--znt-swatch-z-index);
+}
+
+.znt-swatches {
+  display: flex;
+  justify-content: center;
+}
+
+.znt-card-variant-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--znt-swatch-variant-images-z-index);
+}
+
+.znt-card-variant-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.znt-swatch_button {
+  margin: var(--znt-swatch-button-margin);
+  position: relative;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: var(--znt-swatch-button-size);
+  height: var(--znt-swatch-button-size);
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  cursor: pointer;
+  box-shadow: var(--znt-swatch-button-shadow-horizontal) var(--znt-swatch-button-shadow-vertical) var(--znt-swatch-button-shadow-blur) var(--znt-swatch-button-shadow-color);
+  transition: var(--znt-swatch-transition-duration) ease-in-out;
+  border-radius: var(--znt-swatch-button-border-radius);
+  border: 2px solid var(--znt-swatch-border-color);
+}
+.znt-swatch_button .swatch.swatch--square {
+  border-radius: var(--znt-swatch-button-border-radius);
+}
+
+.znt-swatch_button:hover {
+  box-shadow: var(--znt-swatch-button-shadow-hover-horizontal) var(--znt-swatch-button-shadow-hover-vertical) var(--znt-swatch-button-shadow-hover-blur) var(--znt-swatch-button-shadow-hover-color);
+}
+
+.znt-swatch_button[aria-pressed="true"] {
+  box-shadow: var(--znt-swatch-button-shadow-active-horizontal) var(--znt-swatch-button-shadow-active-vertical) var(--znt-swatch-button-shadow-active-blur) var(--znt-swatch-button-shadow-active-color);
+}
+
+.znt-swatch_label {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--znt-swatch-label-bg);
+  padding: var(--znt-swatch-label-padding);
+  border-radius: var(--znt-swatch-label-border-radius);
+  display: none;
+  font-size: var(--znt-swatch-label-font-size);
+  color: var(--znt-swatch-label-text);
+  text-transform: uppercase;
+  box-shadow: var(--znt-swatch-shadow-horizontal) var(--znt-swatch-shadow-vertical) var(--znt-swatch-shadow-blur) var(--znt-swatch-shadow-color);
+  border-radius: var(--znt-swatch-label-border-radius);
+}
+
+.znt-swatch_button.znt-color-hovered .znt-swatch_label {
+  display: block;
+}
+
+.card__information + .card__color-swatches {
+  margin: var(--znt-swatch-card-margin);
+}
+
+/* Update existing Zenyth card styles to use variables */
+.contains-card--product {
+  padding: var(--znt-swatch-card-padding-top) 0 var(--znt-swatch-card-padding-bottom) 0;
+}
+
+.card-wrapper.znt-card-layout--portrait {
+ background-color: var(--znt-swatch-card-bg);
+ padding: var(--znt-swatch-card-padding);
+ box-shadow: var(--znt-swatch-card-shadow-horizontal) var(--znt-swatch-card-shadow-vertical) var(--znt-swatch-card-shadow-blur) var(--znt-swatch-card-shadow);
+transition: var(--znt-swatch-transition-duration);
+}
+
+.card-wrapper.znt-card-layout--portrait:hover {
+ box-shadow: var(--znt-swatch-card-shadow-horizontal) var(--znt-swatch-card-shadow-vertical) var(--znt-swatch-card-shadow-blur-hover) var(--znt-swatch-card-shadow-hover);
+}
+
+.card-wrapper.znt-card-layout--portrait .card__information {
+  text-align: center;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-wrapper.znt-card-layout--portrait .card-information {
+  margin-top: auto;
+}
+
+.card-wrapper.znt-card-layout--portrait  .price__container {
+  display: block;
+  text-align: center;
 }

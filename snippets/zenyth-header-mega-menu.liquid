@@ -1,0 +1,133 @@
+{% comment %}
+Renders a megamenu for the header.
+
+Usage:
+{% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu znt-mega-menu-mod">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+    <li>
+      {%- if link.links != blank -%}
+      <header-menu>
+        <div id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu znt-adk-megamenu">
+          <button id="HeaderMenu-{{ link.handle }}"
+            class="header__menu-item list-menu__item link focus-inset znt-adk-megamenu_button">
+            <span {%- if link.child_active %} class="header__active-menu-item" {% endif %}>
+              {{- link.title | escape -}}
+            </span>
+          </button>
+          <div id="MegaMenu-Content-{{ forloop.index }}"
+            class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup znt-adk-megamenu_panel">
+            {%- assign num_links = link.links.size -%}
+
+            {%- if num_links > 1 -%}
+            <!-- Zenyth Tabs -->
+            <div class="znt-tabs page-width" aria-label="Submenu Tabs">
+              <div class="znt-tabs_triggers" role="tablist">
+                {%- assign tab_index = 0 -%}
+                {%- for childlink in link.links -%}
+                {%- if childlink.links != blank and childlink.links.size > 0 -%}
+                {%- assign tab_index = tab_index | plus: 1 -%}
+                <button class="znt-tabs_trigger" role="tab" id="tab-{{ tab_index }}"
+                  aria-controls="panel-{{ tab_index }}" aria-selected="false">
+                  {{ childlink.title | escape }}
+                </button>
+                {%- else -%}
+                <a href="{{ childlink.url }}" class="mega-menu__link link znt-tabs_link"
+                  id="HeaderMenu-Link-{{ childlink.handle }}">
+                  {{ childlink.title | escape }}
+                </a>
+                {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              <div class="znt-tabs_panels">
+                {%- assign tab_index = 0 -%}
+                {%- for childlink in link.links -%}
+                {%- if childlink.links != blank and childlink.links.size > 0 -%}
+                {%- assign tab_index = tab_index | plus: 1 -%}
+                <div class="znt-tabs_panel" id="panel-{{ tab_index }}" role="tabpanel"
+                  aria-labelledby="tab-{{ tab_index }}" hidden>
+                  <ul class="list-unstyled{% if childlink.links.size > 10 %} znt--columns-split{% endif %}" role="list">
+                    {%- for grandchildlink in childlink.links -%}
+                    <li>
+                      <a href="{{ grandchildlink.url }}"
+                        class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                        {% if grandchildlink.current %} aria-current="page" {% endif %}>
+                        {{ grandchildlink.title | escape }}
+                      </a>
+                    </li>
+                    {%- endfor -%}
+                  </ul>
+
+                  <!-- Footer com o link pai -->
+                  <div class="znt-tabs_panel-footer">
+                    <a href="{{ childlink.url }}" class="mega-menu__link link znt-tabs_panel-link"
+                      id="HeaderMenu-Link-{{ childlink.handle }}">
+                      {{ childlink.title | escape }}
+                    </a>
+                  </div>
+                </div>
+                {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- if request.design_mode -%}
+            <script
+              src="https://websitea11y.com/projects/ShopZenythFramework/Projects/ShopifyMegaMenu/assets/zenyth-mega-menu-shopify-editor.js"
+              defer="defer"></script>
+            {%- endif -%}
+
+
+
+
+
+
+            {%- else -%}
+            <!-- Render as original list -->
+            <ul class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+              role="list">
+              {%- for childlink in link.links -%}
+              <li>
+                <a id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}" href="{{ childlink.url }}"
+                  class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                  {% if childlink.current %} aria-current="page" {% endif %}>
+                  {{ childlink.title | escape }}
+                </a>
+                {%- if childlink.links != blank -%}
+                <ul class="list-unstyled" role="list">
+                  {%- for grandchildlink in childlink.links -%}
+                  <li>
+                    <a id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                      href="{{ grandchildlink.url }}"
+                      class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}" {%
+                      if grandchildlink.current %} aria-current="page" {% endif %}>
+                      {{ grandchildlink.title | escape }}
+                    </a>
+                  </li>
+                  {%- endfor -%}
+                </ul>
+                {%- endif -%}
+              </li>
+              {%- endfor -%}
+            </ul>
+            {%- endif -%}
+          </div>
+        </div>
+      </header-menu>
+      {%- else -%}
+      <a id="HeaderMenu-{{ link.handle }}" href="{{ link.url }}"
+        class="header__menu-item list-menu__item link link--text focus-inset" {% if link.current %} aria-current="page"
+        {% endif %}>
+        <span {%- if link.current %} class="header__active-menu-item" {% endif %}>
+          {{- link.title | escape -}}
+        </span>
+      </a>
+      {%- endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
+</nav>

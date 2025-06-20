@@ -415,3 +415,20 @@
     row-gap: var(--grid-desktop-vertical-spacing);
   }
 }
+
+
+.zenyth-collection-banner .image-with-text__heading {
+  margin: 0;
+}
+
+.zenyth-collection-banner .image-with-text__content p {
+  margin: 0;
+}
+.zenyth-collection-banner .image-with-text__content p + p {
+  margin-top: 10px;
+}
+
+.zenyth-collection-banner .image-with-text__content {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

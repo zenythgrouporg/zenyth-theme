@@ -76,8 +76,10 @@
 
 /* base */
 
+/* Edited by Zenyth */
 .page-width {
-  max-width: var(--page-width);
+  width: var(--page-width);
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -223,6 +225,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   width: auto;
   height: auto;
   clip: auto;
+  opacity: 1;
+  outline-offset: -4px;
 }
 
 .full-width-link {
@@ -465,7 +469,8 @@ table:not([class]) th {
   opacity: 0.7;
 }
 
-a:empty,
+/* Edite by Zenyth */
+/* a:empty,
 ul:empty,
 dl:empty,
 div:empty,
@@ -479,7 +484,7 @@ h4:empty,
 h5:empty,
 h6:empty {
   display: none;
-}
+} */
 
 .link,
 .customer a {
@@ -3174,8 +3179,9 @@ details-disclosure > details {
   margin-bottom: 0;
 }
 
+/* Edited by Zenyth (Alpha removed) */
 .rte a {
-  color: rgba(var(--color-link), var(--alpha-link));
+  color: rgba(var(--color-link));
   text-underline-offset: 0.3rem;
   text-decoration-thickness: 0.1rem;
   transition: text-decoration-thickness var(--duration-short) ease;

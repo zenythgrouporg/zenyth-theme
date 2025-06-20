@@ -6,6 +6,8 @@
     | plus: predictive_search.resources.articles.size
   %}
   <div id="predictive-search-results" role="listbox">
+
+  
     {%- if first_column_results_size > 0 or predictive_search.resources.products.size > 0 -%}
       <div
         id="predictive-search-results-groups-wrapper"
@@ -30,17 +32,14 @@
             <li
               id="predictive-search-option-query-{{ forloop.index }}"
               class="predictive-search__list-item"
-              role="option"
-              aria-selected="false"
-            >
-              <a href="{{ query.url }}" class="predictive-search__item link link--text" tabindex="-1">
+            > 
+              <a href="{{ query.url }}" class="predictive-search__item link link--text">
                 <div class="predictive-search__item-content predictive-search__item-content--centered">
-                  <p
+                  <span
                     class="predictive-search__item-heading predictive-search__item-query-result h5"
-                    aria-label="{{ query.text }}"
                   >
                     {{ query.styled_text }}
-                  </p>
+                  </span>
                 </div>
               </a>
             </li>
@@ -49,12 +48,10 @@
             <li
               id="predictive-search-option-collection-{{ forloop.index }}"
               class="predictive-search__list-item"
-              role="option"
-              aria-selected="false"
             >
-              <a href="{{ collection.url }}" class="predictive-search__item link link--text" tabindex="-1">
+              <a href="{{ collection.url }}" class="predictive-search__item link link--text">
                 <div class="predictive-search__item-content predictive-search__item-content--centered">
-                  <p class="predictive-search__item-heading h5">{{ collection.title | escape }}</p>
+                  <span class="predictive-search__item-heading h5">{{ collection.title | escape }}</span>
                 </div>
               </a>
             </li>
@@ -80,12 +77,10 @@
             <li
               id="predictive-search-option-page-desktop-{{ forloop.index }}"
               class="predictive-search__list-item"
-              role="option"
-              aria-selected="false"
             >
-              <a href="{{ page.url }}" class="predictive-search__item link link--text" tabindex="-1">
+              <a href="{{ page.url }}" class="predictive-search__item link link--text">
                 <div class="predictive-search__item-content predictive-search__item-content--centered">
-                  <p class="predictive-search__item-heading h5">{{ page.title | escape }}</p>
+                  <span class="predictive-search__item-heading h5">{{ page.title | escape }}</span>
                 </div>
               </a>
             </li>
@@ -94,12 +89,10 @@
             <li
               id="predictive-search-option-article-desktop-{{ forloop.index }}"
               class="predictive-search__list-item"
-              role="option"
-              aria-selected="false"
             >
-              <a href="{{ article.url }}" class="predictive-search__item link link--text" tabindex="-1">
+              <a href="{{ article.url }}" class="predictive-search__item link link--text">
                 <div class="predictive-search__item-content predictive-search__item-content--centered">
-                  <p class="predictive-search__item-heading h5">{{ article.title | escape }}</p>
+                  <span class="predictive-search__item-heading h5">{{ article.title | escape }}</span>
                 </div>
               </a>
             </li>
@@ -133,19 +126,17 @@
                 <li
                   id="predictive-search-option-product-{{ forloop.index }}"
                   class="predictive-search__list-item"
-                  role="option"
-                  aria-selected="false"
                 >
                   <a
                     href="{{ product.url }}"
                     class="predictive-search__item predictive-search__item--link-with-thumbnail link link--text"
-                    tabindex="-1"
+                   
                   >
                     {%- if product.featured_media != blank -%}
                       <img
                         class="predictive-search__image"
                         src="{{ product.featured_media | image_url: width: 150 }}"
-                        alt="{{ product.featured_media.alt | escape }}"
+                        alt=""
                         width="50"
                         height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
                       >
@@ -186,12 +177,10 @@
                 <li
                   id="predictive-search-option-page-mobile-{{ forloop.index }}"
                   class="predictive-search__list-item"
-                  role="option"
-                  aria-selected="false"
                 >
-                  <a href="{{ page.url }}" class="predictive-search__item link link--text" tabindex="-1">
+                  <a href="{{ page.url }}" class="predictive-search__item link link--text">
                     <div class="predictive-search__item-content predictive-search__item-content--centered">
-                      <p class="predictive-search__item-heading h5">{{ page.title | escape }}</p>
+                      <span class="predictive-search__item-heading h5">{{ page.title | escape }}</span>
                     </div>
                   </a>
                 </li>
@@ -200,12 +189,10 @@
                 <li
                   id="predictive-search-option-article-mobile-{{ forloop.index }}"
                   class="predictive-search__list-item"
-                  role="option"
-                  aria-selected="false"
                 >
-                  <a href="{{ article.url }}" class="predictive-search__item link link--text" tabindex="-1">
+                  <a href="{{ article.url }}" class="predictive-search__item link link--text">
                     <div class="predictive-search__item-content predictive-search__item-content--centered">
-                      <p class="predictive-search__item-heading h5">{{ article.title | escape }}</p>
+                      <span class="predictive-search__item-heading h5">{{ article.title | escape }}</span>
                     </div>
                   </a>
                 </li>
@@ -224,9 +211,6 @@
     <div id="predictive-search-option-search-keywords" class="predictive-search__search-for-button">
       <button
         class="predictive-search__item predictive-search__item--term link link--text h5 animate-arrow"
-        tabindex="-1"
-        role="option"
-        aria-selected="false"
       >
         <span data-predictive-search-search-for-text>
           {{- 'templates.search.search_for' | t: terms: predictive_search.terms -}}
@@ -259,4 +243,5 @@
       endif
     %}
   </span>
+
 {%- endif -%}

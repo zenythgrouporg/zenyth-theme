@@ -72,3 +72,35 @@ input::-webkit-search-decoration {
 .template-search__results {
   position: relative;
 }
+
+
+/* Zenyth's Overrides */
+.header__search .header__icon.znt-disclosure_button[aria-expanded="false"] + .search-modal.modal__content.znt-disclosure_panel {
+  display: none;
+}
+
+.header__search .header__icon.znt-disclosure_button[aria-expanded="true"] + .search-modal.modal__content.znt-disclosure_panel {
+    display: block;
+    opacity: 1;
+    animation: animateMenuOpen var(--duration-default) ease;
+}
+
+/* Search opened */
+.header__search .header__icon.znt-disclosure_button[aria-expanded="true"] .header__icon-open { display: none; }
+.header__search .header__icon.znt-disclosure_button[aria-expanded="true"] .header__icon-close { display: block; }
+
+/* Search opened Backdrop */
+.header__search .header__icon.znt-disclosure_button[aria-expanded="true"] + .search-modal.modal__content.znt-disclosure_panel .modal-overlay:after {
+    position: absolute;
+    content: "";
+    background-color: rgb(var(--color-foreground), .5);
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 100vh;
+}
+
+
+/* Search closed */
+.header__search .header__icon.znt-disclosure_button[aria-expanded="false"] .header__icon-open { display: block; }
+.header__search .header__icon.znt-disclosure_button[aria-expanded="false"] .header__icon-close { display: none; }

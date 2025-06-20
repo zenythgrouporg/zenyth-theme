@@ -99,7 +99,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__menu-item {
-  padding: 1.1rem 3rem;
+  padding: 14px 20px;
   text-decoration: none;
   font-size: 1.8rem;
 }
@@ -240,4 +240,23 @@ details[open].menu-opening > .menu-drawer__submenu {
     filter: none !important;
     transition: none !important;
   }
+}
+
+
+/* Zenyth's overrides */
+.znt-mobile-menu .znt-adk-megamenu_button {
+  padding: 14px 20px;
+  background-color: transparent;
+  border: none;
+  background-position: calc(100% - 14px) center;
+  font-size: 1.8rem;
+  font-family: var(--font-body-family);
+}
+
+.znt-mobile-menu .menu-drawer__menu.has-submenu .znt-adk-megamenu_panel {
+  padding-left: 16px !important;
+}
+
+.znt-mobile-menu .znt-adk-megamenu_panel .znt-adk-megamenu_panel .znt-adk-megamenu_panel {
+  padding-left: 16px;
 }

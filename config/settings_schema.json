@@ -1,11 +1,153 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Dawn",
-    "theme_version": "15.3.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
+    "theme_name": "Zenyth Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Zenyth",
+    "theme_documentation_url": "https://www.zenythgroup.com/",
+    "theme_support_url": "https://www.zenythgroup.com/"
+  },
+  {
+    "name": "Price Settings",
+    "settings": [
+      {
+        "type": "number",
+        "id": "price_threshold",
+        "label": "Price Threshold",
+        "default": 30000,
+        "info": "Hide prices for products above this amount (in store currency)"
+      },
+      {
+        "type": "text",
+        "id": "contact_button_label",
+        "label": "Contact Button Label",
+        "default": "Contact Us",
+        "info": "Label for the contact button that appears when price is above threshold"
+      },
+      {
+        "type": "url",
+        "id": "contact_button_url",
+        "label": "Contact Button URL",
+        "info": "URL where customers will be directed when clicking the contact button"
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_trailing_zeros",
+        "label": "Hide Trailing Zeros in Prices",
+        "default": true,
+        "info": "When enabled, prices like $100.00 will show as $100"
+      }
+    ]
+  },
+  {
+    "name": "Color Swatches",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_color_swatches",
+        "label": "Enable Color Swatches",
+        "default": false,
+        "info": "Show color variant swatches on product cards"
+      },
+      {
+        "type": "header",
+        "content": "Floating Label Settings"
+      },
+      {
+        "type": "color",
+        "id": "swatch_label_background",
+        "label": "Label Background Color",
+        "default": "#ffffff",
+        "info": "Background color for the floating swatch labels"
+      },
+      {
+        "type": "color",
+        "id": "swatch_label_text",
+        "label": "Label Text Color",
+        "default": "#000000",
+        "info": "Text color for the floating swatch labels"
+      },
+      {
+        "type": "range",
+        "id": "swatch_label_font_size",
+        "min": 10,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Label Font Size",
+        "default": 12,
+        "info": "Font size for the floating swatch labels"
+      },
+      {
+        "type": "range",
+        "id": "swatch_label_padding",
+        "min": 2,
+        "max": 15,
+        "step": 1,
+        "unit": "px",
+        "label": "Label Padding",
+        "default": 5,
+        "info": "Padding around the floating swatch labels"
+      },
+      {
+        "type": "range",
+        "id": "swatch_label_border_radius",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Label Border Radius",
+        "default": 5,
+        "info": "Border radius for the floating swatch labels"
+      },
+      {
+        "type": "header",
+        "content": "Color Variant Button Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_swatch_shadow",
+        "label": "Enable Shadow Effect",
+        "default": true,
+        "info": "Show shadow effect on color swatch buttons"
+      },
+      {
+        "type": "color",
+        "id": "swatch_border_color",
+        "label": "Border Color",
+        "default": "#000000",
+        "info": "Border color for the swatch buttons"
+      },
+      {
+        "type": "color_background",
+        "id": "swatch_shadow_color",
+        "label": "Shadow Color",
+        "default": "rgba(0, 0, 0, 0.5)",
+        "info": "Shadow color for the swatch buttons (only applies when shadow is enabled)"
+      },
+      {
+        "type": "range",
+        "id": "swatch_button_size",
+        "min": 24,
+        "max": 48,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Size",
+        "default": 32,
+        "info": "Size of the color swatch buttons"
+      },
+      {
+        "type": "range",
+        "id": "swatch_button_border_radius",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Button Border Radius",
+        "default": 100,
+        "info": "Border radius for the color swatch buttons"
+      }
+    ]
   },
   {
     "name": "t:settings_schema.logo.name",

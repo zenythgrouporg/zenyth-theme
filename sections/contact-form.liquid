@@ -1,10 +1,51 @@
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
 
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
+
+  #ContactForm {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  {%- case section.settings.form_alignment -%}
+    {%- when 'left' -%}
+      #ContactForm {
+        margin: initial !important;
+      }
+    {%- when 'right' -%}
+      #ContactForm {
+        margin: initial !important;
+        margin-left: auto !important;
+      }
+    {%- when 'center' -%}
+      #ContactForm {
+        margin: 0 auto;
+      }
+  {%- endcase -%}
+
+  {%- case section.settings.form_width -%}
+    {%- when 'small' -%}
+      @media screen and (min-width: 750px) {
+        #ContactForm {
+          width: 33%;
+        }
+      }
+    {%- when 'medium' -%}
+      @media screen and (min-width: 750px) {
+        #ContactForm {
+          width: 50%;
+        }
+      }
+    {%- when 'large' -%}
+      #ContactForm {
+        width: 100%;
+      }
+  {%- endcase -%}
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
@@ -15,7 +56,7 @@
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
+  <div class="contact page-width section-{{ section.id }}-padding">
     {%- if section.settings.heading != blank -%}
       <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.heading }}
@@ -29,7 +70,12 @@
         assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
       endif
     -%}
-    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+
+
+      <div class="znt-form-top-info">
+        Fields with an asterisk (*) are required.
+      </div>
+      {%- form 'contact', id: 'ContactForm', class: contact_form_class, data-znt-form: '' -%}
       {%- if form.posted_successfully? -%}
         <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
           {{- 'icon-success.svg' | inline_asset_content -}}
@@ -52,7 +98,7 @@
         </ul>
       {%- endif -%}
       <div class="contact__fields">
-        <div class="field">
+        <div class="field" data-znt-form_control>
           <input
             class="field__input"
             autocomplete="name"
@@ -61,10 +107,11 @@
             name="contact[{{ 'templates.contact.form.name' | t }}]"
             value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
             placeholder="{{ 'templates.contact.form.name' | t }}"
+            aria-required="true"
           >
-          <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+          <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }} *</label>
         </div>
-        <div class="field field--with-error">
+        <div class="field field--with-error" data-znt-form_control>
           <input
             autocomplete="email"
             type="email"
@@ -99,9 +146,9 @@
           {%- endif -%}
         </div>
       </div>
-      <div class="field">
+      <div class="field" data-znt-form_control>
         <input
-          type="tel"
+          type="number"
           id="ContactForm-phone"
           class="field__input"
           autocomplete="tel"
@@ -109,10 +156,11 @@
           pattern="[0-9\-]*"
           value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
           placeholder="{{ 'templates.contact.form.phone' | t }}"
+          aria-required="true"
         >
-        <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+        <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }} *</label>
       </div>
-      <div class="field">
+      <div class="field" data-znt-form_control>
         <textarea
           rows="10"
           id="ContactForm-body"
@@ -127,7 +175,7 @@
         </label>
       </div>
       <div class="contact__button">
-        <button type="submit" class="button">
+        <button type="submit" class="button" data-znt-form_submit>
           {{ 'templates.contact.form.send' | t }}
         </button>
       </div>
@@ -141,7 +189,7 @@
   "tag": "section",
   "class": "section",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": ["header"]
   },
   "settings": [
     {
@@ -207,6 +255,46 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "select",
+      "id": "form_width",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small (33%)"
+        },
+        {
+          "value": "medium",
+          "label": "Medium (50%)"
+        },
+        {
+          "value": "large",
+          "label": "Large (100%)"
+        }
+      ],
+      "default": "large",
+      "label": "Form Width"
+    },
+    {
+      "type": "select",
+      "id": "form_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Form Alignment"
     }
   ],
   "presets": [

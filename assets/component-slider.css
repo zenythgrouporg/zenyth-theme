@@ -340,8 +340,8 @@ slider-component.slider-component-full-width {
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 44px;
-  height: 44px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -374,4 +374,61 @@ slider-component.slider-component-full-width {
 
 .slider-button--prev:not([disabled]):hover .icon {
   transform: rotate(90deg) scale(1.1);
+}
+
+
+
+/* Mods by Zenyth */
+/* Ensures space when it has a Carousel  */
+
+.slider-buttons {
+    position: absolute;
+    top: -50px;
+    right: 32px;
+} 
+
+.slider-buttons .slider-button {
+    background-color: #617d2b;
+    border-radius: 0;
+    margin: 4px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .5);
+} 
+
+.slider-buttons .slider-button[disabled] {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  opacity: .5;
+  cursor: not-allowed;
+} 
+
+.slider-buttons svg {
+  stroke: #fff;
+  width: 14px;
+  height: 14px;
+}
+
+@media(max-width: 1025px) {
+  .slider-buttons {
+      position: relative;
+    top: 0;
+    right: initial;
+    left: 15px;
+    justify-content: flex-start;
+        padding: 0 32px;
+  }
+}
+
+.znt-featured-collection_container .slider-button {
+  background-color: var(--znt-slider-button-background-color, #617d2b);
+}
+
+.znt-featured-collection_container .slider-button svg {
+  stroke: var(--znt-slider-button-svg-color, #fff);
+}
+
+@media(max-width: 989px) {
+  .znt-featured-collection_container {
+    padding: 0;
+    justify-content: flex-end;
+    width: calc(100% - 30px);
+  }
 }

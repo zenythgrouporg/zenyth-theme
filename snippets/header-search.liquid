@@ -9,26 +9,25 @@
 {% endcomment %}
 
 <details-modal class="header__search">
-  <details>
-    <summary
-      class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle"
+  <div class="znt-disclosure" manage-search-focus>
+    <button
+      class="header__icon header__icon--search header__icon--summary link focus-inset znt-disclosure_button"
       aria-haspopup="dialog"
-      aria-label="{{ 'general.search.search' | t }}"
     >
+      <span class="visually-hidden">{{ 'general.search.search' | t }}</span>
       <span>
-        <span class="svg-wrapper">
+        <span class="svg-wrapper header__icon-open">
           {{- 'icon-search.svg' | inline_asset_content -}}
         </span>
         <span class="svg-wrapper header__icon-close">
           {{- 'icon-close.svg' | inline_asset_content -}}
         </span>
       </span>
-    </summary>
+    </button>
     <div
-      class="search-modal modal__content gradient"
+      class="search-modal modal__content gradient znt-disclosure_panel znt-focus-trap"
       role="dialog"
       aria-modal="true"
-      aria-label="{{ 'general.search.search' | t }}"
     >
       <div class="modal-overlay"></div>
       <div
@@ -95,7 +94,7 @@
         {%- endif -%}
         <button
           type="button"
-          class="search-modal__close-button modal__close-button link link--text focus-inset"
+          class="search-modal__close-button modal__close-button link link--text focus-inset znt-disclosure_close"
           aria-label="{{ 'accessibility.close' | t }}"
         >
           <span class="svg-wrapper">
@@ -104,5 +103,5 @@
         </button>
       </div>
     </div>
-  </details>
+  </div>
 </details-modal>

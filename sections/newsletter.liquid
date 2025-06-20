@@ -112,6 +112,10 @@
                   </span>
                   {{- 'newsletter.success' | t }}
                 </h3>
+                <script>
+                  setTimeout(() => document.getElementById('Newsletter-success--{{ section.id }}').focus(), 500);
+                  console.log('focusing');
+                </script>
               {%- endif -%}
             {% endform %}
           </div>

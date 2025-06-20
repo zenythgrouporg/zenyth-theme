@@ -1,0 +1,360 @@
+.zenyth-profiles-grid {
+  padding: 6rem 0;
+}
+
+.zenyth-profiles-grid .section-header {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.zenyth-profiles-grid__heading {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  font-size: 19px;
+  font-family: Montserrat, sans-serif;
+  color: #343434;
+}
+
+.zenyth-profiles-grid__subheading {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid Layout */
+.znt-profiles-grid {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.znt-profiles-grid .znt-profile-item {
+  margin-left: 0 !important;
+  scroll-margin-left: 0 !important;
+}
+
+/* Grid with slider enabled - override default grid when slider is active */
+.znt-profiles-grid.slider {
+  display: flex;
+  gap: 0;
+  padding-bottom: 0;
+  scroll-padding-right: 1rem; /* Ensure last item can be fully scrolled into view */
+}
+
+/* Add padding to the last slider slide to ensure it's fully visible */
+.znt-profiles-grid.slider:after {
+  content: '';
+  padding-left: 1rem;
+  flex: 0 0 1px;
+}
+
+.znt-profiles-grid.slider .znt-profile-item {
+  padding: 0 1rem;
+  flex: 0 0 auto;
+  width: calc(100% / var(--items-per-slide));
+  scroll-margin-right: 2rem; /* Gives extra space when focused */
+}
+
+/* Ensure last slide is fully visible on focus */
+.znt-profiles-grid.slider .znt-profile-item:last-child {
+  margin-right: 1rem;
+}
+
+/* Full Link Styling */
+.znt-profile-item__full-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.znt-profile-item__full-link:hover {
+  opacity: 0.85;
+}
+
+.layout--list .znt-profile-item__full-link {
+  flex-direction: row;
+  text-align: left;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 749px) {
+  .layout--list .znt-profile-item__full-link {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+/* Column settings */
+.znt-profiles-grid--1-columns {
+  grid-template-columns: repeat(1, 1fr);
+  --items-per-slide: 1;
+}
+
+.znt-profiles-grid--2-columns {
+  grid-template-columns: repeat(2, 1fr);
+  --items-per-slide: 2;
+}
+
+.znt-profiles-grid--3-columns {
+  grid-template-columns: repeat(3, 1fr);
+  --items-per-slide: 3;
+}
+
+.znt-profiles-grid--4-columns {
+  grid-template-columns: repeat(4, 1fr);
+  --items-per-slide: 4;
+}
+
+.znt-profiles-grid--5-columns {
+  grid-template-columns: repeat(5, 1fr);
+  --items-per-slide: 5;
+}
+
+/* Profile Items */
+.znt-profile-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Image styles */
+.znt-profile-item__image-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.znt-profile-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media(max-width: 484px) {
+   .znt-profile-item__image-wrapper {
+    height: 120px;
+  }
+}
+
+/* Profile content */
+.znt-profile-item__content {
+  width: 100%;
+}
+
+.znt-profile-item__name {
+  font-family: Montserrat, sans-serif;
+  margin: 16px 0 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.znt-profile-item__name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.znt-profile-item__name a:hover {
+  text-decoration: underline;
+}
+
+.znt-profile-item__title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.znt-profile-item__description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+/* Placeholder */
+.znt-profile-item__placeholder {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(var(--color-foreground), 0.04);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.znt-profile-item__placeholder svg {
+  width: 50%;
+  height: 50%;
+}
+
+/* Image shapes */
+.image-shape--circle .znt-profile-item__image-wrapper,
+.image-shape--circle .znt-profile-item__placeholder {
+  border-radius: 50%;
+}
+
+.image-shape--rounded .znt-profile-item__image-wrapper,
+.image-shape--rounded .znt-profile-item__placeholder {
+  border-radius: 10px;
+}
+
+/* List Layout */
+.layout--list .znt-profiles-grid:not(.slider) {
+  display: block;
+}
+
+.layout--list .znt-profiles-grid.slider {
+  display: flex;
+}
+
+.layout--list .znt-profile-item:not(.slider__slide) {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.layout--list .znt-profile-item.slider__slide {
+  flex-direction: row;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.layout--list .znt-profile-item__image-wrapper,
+.layout--list .znt-profile-item__placeholder {
+  width: 120px;
+  height: 120px;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.layout--list .znt-profile-item__content {
+  flex: 1;
+}
+
+/* Slider Buttons */
+.zenyth-profiles-grid .slider-buttons {
+  position: absolute;
+  top: -4rem;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0;
+  z-index: 1;
+}
+
+.zenyth-profiles-grid .slider-button {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  padding: 0;
+  border: none;
+  background-color: #617d2b;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--znt-slider-button-svg-color, #FFFFFF);
+  transition: opacity 0.3s ease;
+}
+
+.zenyth-profiles-grid .slider-button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zenyth-profiles-grid .slider-button svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+.zenyth-profiles-grid .slider-button--prev svg {
+  transform: rotate(90deg);
+}
+
+.zenyth-profiles-grid .slider-button--next svg {
+  transform: rotate(270deg);
+}
+
+/* Responsive */
+@media screen and (max-width: 990px) {
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--3-columns,
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--4-columns,
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--5-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .znt-profiles-grid.slider.znt-profiles-grid--3-columns,
+  .znt-profiles-grid.slider.znt-profiles-grid--4-columns,
+  .znt-profiles-grid.slider.znt-profiles-grid--5-columns {
+    --items-per-slide: 2;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .zenyth-profiles-grid {
+    padding: 4rem 0;
+  }
+  
+  .zenyth-profiles-grid__heading {
+    font-size: 1.7rem;
+  }
+  
+  .zenyth-profiles-grid .slider-buttons {
+    top: -3rem;
+  }
+
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--2-columns,
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--3-columns,
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--4-columns,
+  .znt-profiles-grid:not(.slider).znt-profiles-grid--5-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .znt-profiles-grid.slider.znt-profiles-grid--2-columns,
+  .znt-profiles-grid.slider.znt-profiles-grid--3-columns,
+  .znt-profiles-grid.slider.znt-profiles-grid--4-columns,
+  .znt-profiles-grid.slider.znt-profiles-grid--5-columns {
+    --items-per-slide: 1;
+  }
+  
+  .layout--list .znt-profile-item:not(.slider__slide) {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .layout--list .znt-profile-item.slider__slide {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .layout--list .znt-profile-item__image-wrapper,
+  .layout--list .znt-profile-item__placeholder {
+    margin-right: 0;
+    margin-bottom: 1.5rem;
+    width: 150px;
+    height: 150px;
+  }
+} 
+

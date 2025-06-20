@@ -1,5 +1,6 @@
 {{ 'video-section.css' | asset_url | stylesheet_tag }}
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+{{ 'collapsible-content.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -117,6 +118,26 @@
         {%- endif -%}
       </template>
     </deferred-media>
+    <div class="znt-accordion">
+      <div class="znt-disclosure">
+        <h3>
+          <button class="znt-disclosure_button" aria-expanded="false" aria-controls="znt-disclosure-{{ section.id }}" style="
+            {% if section.settings.accordion_heading_color != blank %}color: {{ section.settings.accordion_heading_color }};{% endif %}
+            {% if section.settings.accordion_trigger_background != blank %}background-color: {{ section.settings.accordion_trigger_background }};{% endif %}
+            {% if section.settings.accordion_border_color != blank %}border: 1px solid {{ section.settings.accordion_border_color }};{% endif %}
+            {% if section.settings.enable_box_shadow %}box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);{% endif %}
+          ">
+            <span class="znt-disclosure_button-content">
+              {{ section.settings.accordion_heading }}
+              <svg class="icon icon-caret" viewBox="0 0 10 6" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"></path></svg>
+            </span>
+          </button>
+        </h3>
+        <div class="znt-disclosure_panel" role="region" id="znt-disclosure-{{ section.id }}">
+          {{ section.settings.accordion_content }}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -244,6 +265,46 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Video Transcript Settings"
+    },
+    {
+      "type": "text",
+      "id": "accordion_heading",
+      "label": "Transcript Heading",
+      "default": "Video Transcript"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_content",
+      "label": "Transcript Content",
+      "default": "<p>Enter your video transcript here...</p>"
+    },
+    {
+      "type": "color",
+      "id": "accordion_heading_color",
+      "label": "Trigger Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accordion_trigger_background",
+      "label": "Trigger Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accordion_border_color",
+      "label": "Border Color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_box_shadow",
+      "label": "Enable Box Shadow",
+      "default": true
     }
   ],
   "presets": [

@@ -5,16 +5,16 @@
   {% render 'header-dropdown-menu' %}
 {% endcomment %}
 
-<nav class="header__inline-menu">
+<nav class="header__inline-menu znt-dropdown-menu-mod">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
-            <details id="Details-HeaderMenu-{{ forloop.index }}">
-              <summary
+            <div id="Details-HeaderMenu-{{ forloop.index }}" class="znt-disclosure" znt-disclosure-focusout>
+              <button
                 id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
+                class="header__menu-item list-menu__item link focus-inset znt-disclosure_button"
               >
                 <span
                   {%- if link.child_active %}
@@ -24,10 +24,10 @@
                   {{- link.title | escape -}}
                 </span>
                 {{- 'icon-caret.svg' | inline_asset_content -}}
-              </summary>
+              </button>
               <ul
                 id="HeaderMenu-MenuList-{{ forloop.index }}"
-                class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
+                class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup znt-disclosure_panel"
                 role="list"
                 tabindex="-1"
               >
@@ -45,17 +45,17 @@
                         {{ childlink.title | escape }}
                       </a>
                     {%- else -%}
-                      <details id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
-                        <summary
+                      <div id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}" class="znt-disclosure">
+                        <button
                           id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
-                          class="header__menu-item link link--text list-menu__item focus-inset caption-large"
+                          class="header__menu-item link link--text list-menu__item focus-inset caption-large znt-disclosure_button"
                         >
                           <span>{{ childlink.title | escape }}</span>
                           {{- 'icon-caret.svg' | inline_asset_content -}}
-                        </summary>
+                        </button>
                         <ul
                           id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
-                          class="header__submenu list-menu motion-reduce"
+                          class="header__submenu list-menu motion-reduce znt-disclosure_panel"
                         >
                           {%- for grandchildlink in childlink.links -%}
                             <li>
@@ -72,12 +72,12 @@
                             </li>
                           {%- endfor -%}
                         </ul>
-                      </details>
+                      </div>
                     {%- endif -%}
                   </li>
                 {%- endfor -%}
               </ul>
-            </details>
+            </div>
           </header-menu>
         {%- else -%}
           <a

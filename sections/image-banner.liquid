@@ -53,8 +53,56 @@
 
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="
+    banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}
+    {% if section.settings.enable_mask %}
+      znt-mask znt-mask-opacity-{{ section.settings.mask_opacity }}
+    {% endif %}
+    {% if section.settings.enable_compacted %}
+      znt-section-compacted
+    {% endif %}
+  "
 >
+
+
+  {% if section.settings.enable_mask %}
+    {% assign opacity_1 = section.settings.mask_opacity_1 | times: 0.01 %}
+    {% assign opacity_2 = section.settings.mask_opacity_2 | times: 0.01 %}
+    {% assign opacity_3 = section.settings.mask_opacity_3 | times: 0.01 %}
+  
+    {% capture mask_bottom %}
+      {{ section.settings.mask_color_1 | color_modify: 'alpha', opacity_1 }}
+    {% endcapture %}
+    {% capture mask_middle %}
+      {{ section.settings.mask_color_2 | color_modify: 'alpha', opacity_2 }}
+    {% endcapture %}
+    {% capture mask_top %}
+      {{ section.settings.mask_color_3 | color_modify: 'alpha', opacity_3 }}
+    {% endcapture %}
+  
+    <div class="znt-mask_backdrop" style="
+      {% if section.settings.mask_direction == 'radial' %}
+        background: radial-gradient(
+          circle,
+          {{ mask_top | strip }} 0%,
+          {{ mask_middle | strip }} 50%,
+          {{ mask_bottom | strip }} 100%
+        ) !important;
+      {% else %}
+        background: linear-gradient(
+          {{ section.settings.mask_direction }},
+          {{ mask_bottom | strip }} 0%,
+          {{ mask_middle | strip }} 50%,
+          {{ mask_top | strip }} 100%
+        ) !important;
+      {% endif %}
+    "></div>
+  {% endif %}
+
+
+
+
+
   {%- if section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
@@ -115,17 +163,17 @@
       }}
     </div>
   {%- endif -%}
-  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} {% if section.settings.enable_page_width %} page-width{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
-            <h2
+            <{{ block.settings.heading_tag }}
               class="banner__heading inline-richtext {{ block.settings.heading_size }}"
               {{ block.shopify_attributes }}
             >
               {{ block.settings.heading }}
-            </h2>
+            </{{ block.settings.heading_tag }}>
           {%- when 'text' -%}
             <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               <p>{{ block.settings.text }}</p>
@@ -172,7 +220,7 @@
   "tag": "section",
   "class": "section",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": ["header"]
   },
   "settings": [
     {
@@ -245,7 +293,35 @@
     },
     {
       "type": "header",
-      "content": "t:sections.image-banner.settings.content.content"
+      "content": "Content Settings"
+    },
+    {
+      "type": "header",
+      "content": "Content Layout and Visibility"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_compacted",
+      "label": "Compact section height (Section adjusts to the content height)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_page_width",
+      "label": "Enable boxed container (Main content width)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_box",
+      "default": true,
+      "label": "Add Content box (Only behind the content)"
     },
     {
       "type": "select",
@@ -289,7 +365,7 @@
         }
       ],
       "default": "middle-center",
-      "label": "t:sections.image-banner.settings.desktop_content_position.label"
+      "label": "Content Position"
     },
     {
       "type": "select",
@@ -309,19 +385,107 @@
         }
       ],
       "default": "center",
-      "label": "t:sections.image-banner.settings.desktop_content_alignment.label"
+      "label": "Content/Text aligmnent"
+    },
+    {
+      "type": "header",
+      "content": "Content Background mask"
     },
     {
       "type": "checkbox",
-      "id": "show_text_box",
-      "default": true,
-      "label": "t:sections.image-banner.settings.show_text_box.label"
+      "id": "enable_mask",
+      "label": "Enable background mask",
+      "default": false
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
+      "type": "range",
+      "id": "mask_opacity",
+      "label": "Main Mask Opacity (0–10)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "color",
+      "id": "mask_color_3",
+      "label": "Top Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "mask_opacity_3",
+      "label": "Top Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "mask_color_2",
+      "label": "Middle Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "mask_opacity_2",
+      "label": "Middle Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "mask_color_1",
+      "label": "Bottom Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "mask_opacity_1",
+      "label": "Bottom Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "mask_direction",
+      "label": "Mask Gradient Direction",
+      "default": "to top",
+      "options": [
+        {
+          "value": "to top",
+          "label": "Top to Bottom"
+        },
+        {
+          "value": "to bottom",
+          "label": "Bottom to Top"
+        },
+        {
+          "value": "to left",
+          "label": "Right to Left"
+        },
+        {
+          "value": "to right",
+          "label": "Left to Right"
+        },
+        {
+          "value": "45deg",
+          "label": "Diagonal ↗ (45°)"
+        },
+        {
+          "value": "-45deg",
+          "label": "Diagonal ↘ (-45°)"
+        },
+        {
+          "value": "radial", 
+          "label": "Radial (top to bottom = center to edges)" 
+        }
+      ]
     },
     {
       "type": "header",
@@ -332,7 +496,7 @@
       "id": "stack_images_on_mobile",
       "default": true,
       "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
-    },    
+    },
     {
       "type": "select",
       "id": "mobile_content_alignment",
@@ -399,6 +563,38 @@
           ],
           "default": "h1",
           "label": "t:sections.all.heading_size.label"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "default": "h2",
+          "label": "Heading tag"
         }
       ]
     },

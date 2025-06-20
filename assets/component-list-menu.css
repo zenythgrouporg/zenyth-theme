@@ -28,3 +28,42 @@
   width: 10rem;
   padding: 0.5rem;
 }
+
+
+/* Zenyth Overrides */
+
+.znt-dropdown-menu-mod .header__submenu:not(.znt--open) {
+  display: none;
+}
+
+.znt-dropdown-menu-mod .header__submenu.znt--open {
+  z-index: 1;
+}
+
+.znt-dropdown-menu-mod .header__menu-item {
+  padding-right: 34px;
+  text-align: left;
+}
+
+.znt-dropdown-menu-mod .header__menu-item svg {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 12px !important;
+
+}
+
+.znt-dropdown-menu-mod [id*="Details-HeaderMenu-"] {
+  position: relative;
+}
+
+.znt-dropdown-menu-mod .header__submenu {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+
+.znt-dropdown-menu-mod .header__inline-menu li:last-child .header__submenu {
+  left: initial;
+  right: -16px;
+}

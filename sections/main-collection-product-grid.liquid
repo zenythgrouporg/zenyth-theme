@@ -34,6 +34,16 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .product-grid-container.text-center .card__heading,
+  .product-grid-container.text-center .card-information {
+    text-align: center !important;
+  }
+
+  .product-grid-container.text-right .card__heading,
+  .product-grid-container.text-right .card-information {
+    text-align: right !important;
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
@@ -118,7 +128,7 @@
       {%- endif -%}
 
       <div
-        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if section.settings.text_alignment != 'left' %} text-{{ section.settings.text_alignment }}{% endif %}"
         id="ProductGridContainer"
         {% if settings.animations_reveal_on_scroll %}
           data-cascade
@@ -159,7 +169,7 @@
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
                 <li
-                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if section.settings.show_price == 'hover' %} znt--show-on-hover{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
                     style="--animation-order: {{ forloop.index }};"
@@ -175,7 +185,8 @@
                     lazy_load: lazy_load,
                     skip_styles: skip_card_product_styles,
                     quick_add: section.settings.quick_add,
-                    section_id: section.id
+                    section_id: section.id,
+                    show_price: section.settings.show_price != 'hide'
                   %}
                 </li>
                 {%- assign skip_card_product_styles = true -%}
@@ -240,6 +251,26 @@
       "label": "t:sections.all.colors.label",
       "info": "t:sections.all.colors.has_cards_info",
       "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "show_price",
+      "label": "Price Display",
+      "options": [
+        {
+          "value": "show",
+          "label": "Show Price"
+        },
+        {
+          "value": "hide",
+          "label": "Hide Price"
+        },
+        {
+          "value": "hover",
+          "label": "Show on Hover"
+        }
+      ],
+      "default": "show"
     },
     {
       "type": "header",
@@ -404,6 +435,26 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
     }
   ]
 }
